@@ -30,10 +30,27 @@ def alphabet_positions(string)
 end
 
 
-def back_to_letter(shift_key)
+def back_to_letter_upper(shift_key)
   #original_letter = alphabet_positions(letter)
   #original_letter = original_letter.join('').to_i
   #shift_key = shift_key.to_i
+  if shift_key > 26
+    shift_key = shift_key - 26
+  end
+  new_letter = []
+  new_letter.push(shift_key + 64)
+  transformed_new_letter = new_letter.map {|x| x.chr}
+  return transformed_new_letter
+end
+
+
+def back_to_letter_lower(shift_key)
+  #original_letter = alphabet_positions(letter)
+  #original_letter = original_letter.join('').to_i
+  #shift_key = shift_key.to_i
+  if shift_key > 26
+    shift_key = shift_key - 26
+  end
   new_letter = []
   new_letter.push(shift_key + 96)
   transformed_new_letter = new_letter.map {|x| x.chr}
@@ -59,17 +76,15 @@ def letter_eval(final_array, separated, shift_amount = 0)
   separated.each do |character|
     if character.match?(/[[:alpha:]]/) == false
       final_array.push(character)
-      '''
-    elsif character
+    elsif character.is_upper?
       original_position = alphabet_positions(character)
       original_position = original_position.join('').to_i
 
       shift_key = shift(original_position, shift_amount)
-      shift_key = shift_key.to_i
+      #shift_key = shift_key.to_i
 
-      transformed = back_to_letter(original_position, shift_key)
-      final_array.push(transformed)
-      '''
+      transformed_up = back_to_letter_upper(shift_key)
+      final_array.push(transformed_up)
     else
       original_position = alphabet_positions(character)
       original_position = original_position.join('').to_i
@@ -77,8 +92,8 @@ def letter_eval(final_array, separated, shift_amount = 0)
       shift_key = shift(original_position, shift_amount)
       #shift_key = shift_key.to_i
 
-      transformed = back_to_letter(shift_key)
-      final_array.push(transformed)
+      transformed_down = back_to_letter_lower(shift_key)
+      final_array.push(transformed_down)
     end
   end
   return final_array
