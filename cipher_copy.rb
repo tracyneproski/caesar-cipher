@@ -13,11 +13,6 @@ class String
 end
 
 
-def letter?(char)
-  char.match?(/[[:alpha:]]/)
-end
-
-
 def alphabet_positions(string)
   def is_upper?
     self == self.upcase
@@ -35,19 +30,64 @@ def alphabet_positions(string)
 end
 
 
-def back_to_letter(letter, shift_key)
-  original_letter = alphabet_positions(letter)
-  original_letter = original_letter.join('').to_i
-  shift_key = shift_key.to_i
+def back_to_letter(shift_key)
+  #original_letter = alphabet_positions(letter)
+  #original_letter = original_letter.join('').to_i
+  #shift_key = shift_key.to_i
   new_letter = []
-  new_letter.push(original_letter + shift_key + 96)
+  new_letter.push(shift_key + 96)
   transformed_new_letter = new_letter.map {|x| x.chr}
   return transformed_new_letter
 end
 
 
+def shift(original_position, shift_amount = 0)
+  #original_number = alphabet_positions(letter)
+  #original_number = original_number.join('').to_i
+  shift_amount = shift_amount.to_i
+  
+  new_number = original_position + shift_amount
+end
+
+
+def separate(statement)
+  string_array = statement.split('')
+end
+
+
+def letter_eval(final_array, separated, shift_amount = 0)
+  separated.each do |character|
+    if character.match?(/[[:alpha:]]/) == false
+      final_array.push(character)
+      '''
+    elsif character
+      original_position = alphabet_positions(character)
+      original_position = original_position.join('').to_i
+
+      shift_key = shift(original_position, shift_amount)
+      shift_key = shift_key.to_i
+
+      transformed = back_to_letter(original_position, shift_key)
+      final_array.push(transformed)
+      '''
+    else
+      original_position = alphabet_positions(character)
+      original_position = original_position.join('').to_i
+
+      shift_key = shift(original_position, shift_amount)
+      #shift_key = shift_key.to_i
+
+      transformed = back_to_letter(shift_key)
+      final_array.push(transformed)
+    end
+  end
+  return final_array
+end
+
 
 '''
+This may come in handy later
+
 def case_correct
   if string.is_lower?
     string.bytes.map{|b| b + 96}
@@ -55,17 +95,6 @@ def case_correct
     string.bytes.map{|b| b + 64}
   end
 end
-'''
-
-def shift(letter, shift_amount = 0)
-  original_number = alphabet_positions(letter)
-  
-  original_number = original_number.join('').to_i
-  shift_amount = shift_amount.to_i
-  
-  new_number = original_number + shift_amount
-end
-
 
 def letter?(char)
   char.match?(/[[:alpha:]]/)
@@ -83,28 +112,6 @@ def azwrap(new_number)
 end
 
 
-def separate(statement)
-  string_array = statement.split('')
-end
-
-
-def letter_eval(final_array, separated, shift_amount = 0)
-  separated.each do |character|
-    if character.match?(/[[:alpha:]]/) == false
-      final_array.push(character)
-    else
-      shift_key = shift(character, shift_amount)
-      shift_key = shift_key.to_i
-      transformed = back_to_letter(character, shift_key)
-      final_array.push(transformed)
-    end
-  end
-  return final_array
-end
-
-
-'''
-This may come in handy later
 def isogram?(string)
   original_length = string.length
   string_array = string.downcase.split('')
@@ -131,24 +138,22 @@ puts "Shift amount?"
 shift_amount = gets
 shift_amount = shift_amount.chomp
 separated = []
-separated = separate(statement.chomp)
+#separated = separate(statement.chomp)
+separated = separate(statement)
 
-'''
-puts "This is separated\n"
-puts separated
-'''
 
 final_array = []
 final_array = letter_eval(final_array, separated, shift_amount)
 
-puts "This is final_array\n"
-
-binding.pry
+#puts "This is final_array\n"
 
 puts final_array.flatten.join
 
 
 '''
+puts "This is separated\n"
+puts separated
+
 puts "What letter to test?"
 letter = gets
 letter = letter.chomp
