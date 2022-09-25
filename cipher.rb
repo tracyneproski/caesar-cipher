@@ -92,7 +92,7 @@ def letter_eval(final_array, separated, shift_amount = 0)
 end
 
 
-puts "What statement to test?"
+puts "What statement would you like to code?"
 statement = gets
 statement = statement.chomp
 
@@ -106,6 +106,7 @@ separated = separate(statement)
 final_array = []
 final_array = letter_eval(final_array, separated, shift_amount)
 
+puts "Here is your encoded message:\n"
 puts final_array.flatten.join
 
 
