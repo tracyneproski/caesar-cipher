@@ -14,14 +14,6 @@ end
 
 
 def alphabet_positions(string)
-  def is_upper?
-    self == self.upcase
-  end
-
-  def is_lower?
-    self == self.downcase
-  end
-  
   if string.is_lower?
     string.bytes.map{|b| b - 96}
   elsif string.is_upper?
@@ -60,11 +52,11 @@ def shift(original_position, shift_amount = 0)
   new_number = original_position + shift_amount
 end
 
-
+'''
 def separate(statement)
   string_array = statement.split('')
 end
-
+'''
 
 def letter_eval(final_array, separated, shift_amount = 0)
   separated.each do |character|
@@ -101,7 +93,7 @@ shift_amount = gets
 shift_amount = shift_amount.chomp
 
 separated = []
-separated = separate(statement)
+separated = statement.split('')
 
 final_array = []
 final_array = letter_eval(final_array, separated, shift_amount)
