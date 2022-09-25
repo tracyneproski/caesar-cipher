@@ -40,10 +40,12 @@ def back_to_letter(letter, shift_key)
   original_letter = original_letter.join('').to_i
   shift_key = shift_key.to_i
   new_letter = []
-  new_letter.push(original_letter + shift_key)
+  new_letter.push(original_letter + shift_key + 96)
   transformed_new_letter = new_letter.map {|x| x.chr}
   return transformed_new_letter
 end
+
+
 
 '''
 def case_correct
@@ -62,7 +64,6 @@ def shift(letter, shift_amount = 0)
   shift_amount = shift_amount.to_i
   
   new_number = original_number + shift_amount
-  return new_number
 end
 
 
@@ -87,17 +88,16 @@ def separate(statement)
 end
 
 
-def letter_eval(separated, shift_amount = 0)
+def letter_eval(final_array, separated, shift_amount = 0)
   separated.each do |character|
-    if character.letter? == false,
-      character.push(Array.new(final_array))
+    if character.match?(/[[:alpha:]]/) == false
+      final_array.push(character)
     else
       shift_key = shift(character, shift_amount)
       shift_key = shift_key.to_i
-      
+      transformed = back_to_letter(character, shift_key)
+      final_array.push(transformed)
     end
-
-
   end
   return final_array
 end
@@ -126,10 +126,10 @@ isogram?("Odin")
 '''
 puts "What statement to test?"
 statement = gets
-
-binding.pry
-
-
+statement = statement.chomp
+puts "Shift amount?"
+shift_amount = gets
+shift_amount = shift_amount.chomp
 separated = []
 separated = separate(statement.chomp)
 
@@ -139,10 +139,13 @@ puts separated
 '''
 
 final_array = []
-final_array = letter_eval(separated)
+final_array = letter_eval(final_array, separated, shift_amount)
 
 puts "This is final_array\n"
-puts final_array
+
+binding.pry
+
+puts final_array.flatten.join
 
 
 '''
