@@ -62,7 +62,9 @@ def shift(original_position, shift_amount = 0)
   #original_number = alphabet_positions(letter)
   #original_number = original_number.join('').to_i
   shift_amount = shift_amount.to_i
-  
+  if shift_amount > 26
+    shift_amount = shift_amount % 26
+  end
   new_number = original_position + shift_amount
 end
 
